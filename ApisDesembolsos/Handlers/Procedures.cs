@@ -468,9 +468,9 @@ namespace ApisDesembolsos.Handlers
            // return Datos;
         }
 
-        public ResponseModel PccuProcesado(REQUEST_TICKET_AS_INT data)
+        public void PccuProcesado(REQUEST_TICKET_AS_INT data)
         {
-            var Datos = new ResponseModel();
+            //var Datos = new ResponseModel();
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -480,22 +480,22 @@ namespace ApisDesembolsos.Handlers
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                       /* while (reader.Read())
                         {
                             Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
                             Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
                             Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
                             Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
-                        }
+                        }*/
                     }
                 }
             }
-            return Datos;
+            //return Datos;
         }
 
-        public ResponseModel PccuError(REQUEST_TICKET_AS_INT data)
+        public void PccuError(REQUEST_TICKET_AS_INT data)
         {
-            var Datos = new ResponseModel();
+           // var Datos = new ResponseModel();
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -507,20 +507,20 @@ namespace ApisDesembolsos.Handlers
                     {
                         while (reader.Read())
                         {
-                            Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
+                         /*   Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
                             Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
                             Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
+                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);*/
                         }
                     }
                 }
             }
-            return Datos;
+           // return Datos;
         }
 
-        public ResponseModel solicitudCompara(REQUEST_TICKET_AND_CI data)
+        public void solicitudCompara(REQUEST_TICKET_AND_CI data)
         {
-            var Datos = new ResponseModel();
+           // var Datos = new ResponseModel();
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -532,20 +532,20 @@ namespace ApisDesembolsos.Handlers
                     {
                         while (reader.Read())
                         {
-                            Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
+                           /* Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
                             Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
                             Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
+                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);*/
                         }
                     }
                 }
             }
-            return Datos;
+            //return Datos;
         }
 
-        public ResponseModel solicitudProcesado(REQUEST_ID data)
+        public void solicitudProcesado(REQUEST_ID data)
         {
-            var Datos = new ResponseModel();
+           // var Datos = new ResponseModel();
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -555,17 +555,17 @@ namespace ApisDesembolsos.Handlers
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                        /*while (reader.Read())
                         {
                             Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
                             Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
                             Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
                             Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
-                        }
+                        }*/
                     }
                 }
             }
-            return Datos;
+            //return Datos;
         }
 
         //ApisBuros
@@ -680,9 +680,9 @@ namespace ApisDesembolsos.Handlers
             return response;
         }
 
-        public CI_RESPONSE getCiPersona2(REQUEST_TICKET_AS_INT data)
+        public List<CI_RESPONSE> getCiPersona2(REQUEST_TICKET_AS_INT data)
         {
-            var response = new CI_RESPONSE();
+            List<CI_RESPONSE> responseList = new List<CI_RESPONSE>();
             var cn = new ConnectionBuros();
             using (var conexion = new SqlConnection(cn.get_cadConexionBuros()))
             {
@@ -690,17 +690,33 @@ namespace ApisDesembolsos.Handlers
                 string sql = "select CI from PERSONA where tipo<>'TITULAR' and tiket ='" + data.ticket + "'";
                 using (SqlCommand command = new SqlCommand(sql, conexion))
                 {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            response.ci = Convert.ToString(reader["CI"]);
 
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        try
+                        {
+                            var dt = new DataTable();
+                            adapter.Fill(dt);
+
+                            if (dt.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dt.Rows.Count; i++)
+                                {
+                                    var response = new CI_RESPONSE();
+                                    response.ci = Convert.ToString(dt.Rows[i]["CI"]);
+                                    responseList.Add(response);
+                                }
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception
                         }
                     }
                 }
             }
-            return response;
+            return responseList;
         }
     }
 }

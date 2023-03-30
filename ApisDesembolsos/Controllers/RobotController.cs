@@ -82,42 +82,42 @@ namespace ApisDesembolsos.Controllers
 
         [HttpPost] //Probando
         [Route("procPCCU")]
-        public IActionResult pccuProcesado([FromBody] REQUEST_TICKET_AS_INT data)
+        public void pccuProcesado([FromBody] REQUEST_TICKET_AS_INT data)
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.PccuProcesado(data);
-            return Ok(pro);
+            //return Ok(pro);
         }
 
         [HttpPost]    //Probando
         [Route("errorPCCU")]
-        public IActionResult pccuError([FromBody] REQUEST_TICKET_AS_INT data)
+        public void pccuError([FromBody] REQUEST_TICKET_AS_INT data)
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.PccuError(data);
-            return Ok(pro);
+           // return Ok(pro);
         }
 
         [HttpPost] //Probado
         [Route("solCompara")]
-        public IActionResult solCompara([FromBody] REQUEST_TICKET_AND_CI data)
+        public void solCompara([FromBody] REQUEST_TICKET_AND_CI data)
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.solicitudCompara(data);
-            return Ok(pro);
+           // return Ok(pro);
         }
 
         [HttpPost] //Probando
         [Route("solProcesado")]
-        public IActionResult solProcesado([FromBody] REQUEST_ID data)
+        public void solProcesado([FromBody] REQUEST_ID data)
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.solicitudProcesado(data);
-            return Ok(pro);
+           // return Ok(pro);
         }
 
         //NewControllers
