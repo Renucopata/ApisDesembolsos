@@ -355,9 +355,9 @@ namespace ApisDesembolsos.Handlers
             return Datos;
         }
         //----------------
-        public Int64? SolicitudPccu()
+        public List<TICKET_RESPONSE> SolicitudPccu()
         {
-            var Datos = new ResponseModel();
+            List<TICKET_RESPONSE> responseList = new List<TICKET_RESPONSE>();
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -365,19 +365,33 @@ namespace ApisDesembolsos.Handlers
                 string sql = "select TICKET from SOLICITUD_PCCU where  PROCESADO='NO' AND TICKET NOT IN (SELECT TICKET FROM SOLICITUD_PCCU WHERE ESTADO='PENDIENTE') GROUP BY   TICKET";
                 using (SqlCommand command = new SqlCommand(sql, conexion))
                 {
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (var adapter = new SqlDataAdapter(command))
                     {
-                        while (reader.Read())
+                        try
                         {
-                            Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
-                            //Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
-                            //Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            //Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
+                            var dt = new DataTable();
+                            adapter.Fill(dt);
+
+                            if (dt.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dt.Rows.Count; i++)
+                                {
+                                    var response = new TICKET_RESPONSE();
+                                    response.TICKET = Convert.ToInt64(dt.Rows[i]["TICKET"]);
+                                 
+                                    responseList.Add(response);
+                                }
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception
                         }
                     }
                 }
             }
-            return Datos.TICKET;
+            return responseList;
         }
 
         public bool insertPlan(REQUEST_TICKET data)
@@ -404,9 +418,10 @@ namespace ApisDesembolsos.Handlers
             return resp;
         }
 
-        public ResponseModel PccuPendiente(REQUEST_TICKET_AS_INT data)
+        public ESTADO_RESPONSE PccuPendiente(REQUEST_TICKET_AS_INT data)
         {
-            var Datos = new ResponseModel();
+            var response = new ESTADO_RESPONSE();
+  
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -418,18 +433,16 @@ namespace ApisDesembolsos.Handlers
                     {
                         while (reader.Read())
                         {
-                            /*Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
-                            Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
-                            Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);*/
+                            response.ESTADO = Convert.ToString(reader["ESTADO"]);
+                  
                         }
                     }
                 }
             }
-            return Datos;
+            return response;
         }
 
-        public ResponseModel PccuACEPTADO(REQUEST_TICKET_AS_INT data)
+        public void PccuACEPTADO(REQUEST_TICKET_AS_INT data)
         {
             var Datos = new ResponseModel();
             var cn = new ConnectionDesembolsos();
@@ -441,17 +454,18 @@ namespace ApisDesembolsos.Handlers
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                        
+                       /* while (reader.Read())
                         {
                             Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
                             Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
                             Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
                             Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
-                        }
+                        }*/
                     }
                 }
             }
-            return Datos;
+           // return Datos;
         }
 
         public ResponseModel PccuProcesado(REQUEST_TICKET_AS_INT data)

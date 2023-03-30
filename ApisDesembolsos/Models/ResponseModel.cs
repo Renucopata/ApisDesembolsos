@@ -87,4 +87,13 @@ namespace ApisDesembolsos.Models
     {
         public string ci { get; set; }
     }
+    public class ESTADO_RESPONSE
+    {
+        public string ESTADO { get; set; }
+    }
+
+    public class TICKET_RESPONSE
+    {
+        public Int64 TICKET { get; set; }
+    }
 }

@@ -39,7 +39,7 @@ namespace ApisDesembolsos.Controllers
         }
 
         // GET api/values/5
-        [HttpGet] // Probada (Preguntar por que devuelve todo el modelo de desembolso y no solo los tickets)
+        [HttpGet] // Probada 
         [Route("solPCCU")]
         public IActionResult GetPccu()
         {
@@ -72,12 +72,12 @@ namespace ApisDesembolsos.Controllers
 
         [HttpPost] //Probando
         [Route("acepPCCU")]
-        public IActionResult pccuAceptado([FromBody] REQUEST_TICKET_AS_INT data)
+        public void pccuAceptado([FromBody] REQUEST_TICKET_AS_INT data)
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.PccuACEPTADO(data);
-            return Ok(pro);
+            //return Ok(pro);
         }
 
         [HttpPost] //Probando
