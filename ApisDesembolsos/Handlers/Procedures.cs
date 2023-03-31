@@ -189,7 +189,7 @@ namespace ApisDesembolsos.Handlers
 
                         return true;
 
-                        //Siempre devuelve true, comfirmar que es necesario llenar los parametros
+                       
                     }
                     catch (Exception ex)
                     {
@@ -395,7 +395,7 @@ namespace ApisDesembolsos.Handlers
             }
             return Datos;
         }
-        //----------------_
+        
         public List<TICKET_RESPONSE> SolicitudPccu()
         {
             List<TICKET_RESPONSE> responseList = new List<TICKET_RESPONSE>();
@@ -438,7 +438,7 @@ namespace ApisDesembolsos.Handlers
         public bool insertPlan(REQUEST_TICKET data)
         {
             bool resp = false;
-            // var queryData = data.ToString();
+      
             string sqlText = "INSERT INTO [PLAN] (TICKET,PLAN_DE_PAGOS,VOUCHER,ESTADO) VALUES ('" + data.ticket + "','','','ESPERA')";
             try
             {
@@ -496,22 +496,16 @@ namespace ApisDesembolsos.Handlers
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         
-                       /* while (reader.Read())
-                        {
-                            Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
-                            Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
-                            Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
-                        }*/
+                    
                     }
                 }
             }
-           // return Datos;
+       
         }
 
         public void PccuProcesado(REQUEST_TICKET_AS_INT data)
         {
-            //var Datos = new ResponseModel();
+            
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -521,22 +515,16 @@ namespace ApisDesembolsos.Handlers
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                       /* while (reader.Read())
-                        {
-                            Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
-                            Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
-                            Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
-                        }*/
+                    
                     }
                 }
             }
-            //return Datos;
+          
         }
 
         public void PccuError(REQUEST_TICKET_AS_INT data)
         {
-           // var Datos = new ResponseModel();
+    
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -546,22 +534,16 @@ namespace ApisDesembolsos.Handlers
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
-                        {
-                         /*   Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
-                            Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
-                            Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);*/
-                        }
+                      
                     }
                 }
             }
-           // return Datos;
+       
         }
 
         public void solicitudCompara(REQUEST_TICKET_AND_CI data)
         {
-           // var Datos = new ResponseModel();
+           
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -573,20 +555,17 @@ namespace ApisDesembolsos.Handlers
                     {
                         while (reader.Read())
                         {
-                           /* Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
-                            Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
-                            Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);*/
+                           
                         }
                     }
                 }
             }
-            //return Datos;
+      
         }
 
         public void solicitudProcesado(REQUEST_ID data)
         {
-           // var Datos = new ResponseModel();
+  
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
@@ -596,17 +575,11 @@ namespace ApisDesembolsos.Handlers
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        /*while (reader.Read())
-                        {
-                            Datos.TICKET = Convert.ToInt64(reader["TICKET"]);
-                            Datos.NPRESTAMO = Convert.ToInt64(reader["NPRESTAMO"]);
-                            Datos.RES_BUROS = Convert.ToString(reader["RES_BUROS"]);
-                            Datos.RES_PCCU = Convert.ToString(reader["RES_PCCU"]);
-                        }*/
+                       
                     }
                 }
             }
-            //return Datos;
+     
         }
 
         //ApisBuros
@@ -634,7 +607,7 @@ namespace ApisDesembolsos.Handlers
 
                             return true;
 
-                            //Siempre devuelve true, comfirmar que es necesario llenar los parametros
+                     
                         }
                         catch (Exception ex)
                         {

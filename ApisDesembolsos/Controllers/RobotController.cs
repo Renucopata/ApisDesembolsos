@@ -44,7 +44,7 @@ namespace ApisDesembolsos.Controllers
             return Ok(pro.SpTraerSoliEnvios(data));
         }
 
-        // GET api/values/5
+      
         [HttpGet] // Probada 
         [Route("solPCCU")]
         public IActionResult GetPccu()
@@ -61,18 +61,18 @@ namespace ApisDesembolsos.Controllers
 
             Procedures pro = new Procedures();
             ModelState.Clear();
-            //pro.insertPlan(data);
+  
             return Ok(pro.insertPlan(data));
         }
 
-        //GetPccuPendiente controller (Rene)
+ 
         [HttpPost] //Probado 
         [Route("GetPccuPendiente")]
         public IActionResult GetPccuPendiente([FromBody] REQUEST_TICKET_AS_INT data)
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
-            // pro.PccuPendiente(data);
+       
             return Ok(pro.PccuPendiente(data));
         }
 
@@ -83,7 +83,7 @@ namespace ApisDesembolsos.Controllers
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.PccuACEPTADO(data);
-            //return Ok(pro);
+
         }
 
         [HttpPost] //Probando
@@ -93,7 +93,7 @@ namespace ApisDesembolsos.Controllers
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.PccuProcesado(data);
-            //return Ok(pro);
+
         }
 
         [HttpPost]    //Probando
@@ -103,7 +103,7 @@ namespace ApisDesembolsos.Controllers
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.PccuError(data);
-           // return Ok(pro);
+
         }
 
         [HttpPost] //Probado
@@ -113,7 +113,7 @@ namespace ApisDesembolsos.Controllers
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.solicitudCompara(data);
-           // return Ok(pro);
+
         }
 
         [HttpPost] //Probando
@@ -123,13 +123,13 @@ namespace ApisDesembolsos.Controllers
             Procedures pro = new Procedures();
             ModelState.Clear();
             pro.solicitudProcesado(data);
-           // return Ok(pro);
+
         }
 
         //NewControllers
 
         [HttpPost]
-        [Route("SPinserSolPccu")] //Funcionando pero no probada
+        [Route("SPinserSolPccu")] //Probada y funcionando
         public IActionResult SpInserSolPccu([FromBody] REQUEST_TICKET_AND_IDPERSONA data)
         {
             Procedures pro = new Procedures();
@@ -139,7 +139,7 @@ namespace ApisDesembolsos.Controllers
 
 
         [HttpPost]
-        [Route("SPinserSol")] //Prueba fallida no hace el insert en la tabla
+        [Route("SPinserSol")] //Probada y funcionando
         public IActionResult SpInserSol([FromBody] REQUEST_INFO_INSER_SOL data)
         {
             Procedures pro = new Procedures();
@@ -212,7 +212,7 @@ namespace ApisDesembolsos.Controllers
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
-            // pro.getCiPersona(data);
+     
             return Ok(pro.getCiPersona(data));
         }
 
@@ -223,7 +223,7 @@ namespace ApisDesembolsos.Controllers
         {
             Procedures pro = new Procedures();
             ModelState.Clear();
-            //pro.getCiPersona2(data);
+       
             return Ok(pro.getCiPersona2(data));
         }
     }
