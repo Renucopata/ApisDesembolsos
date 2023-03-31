@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\robotltd\\source\\repos\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj": {}
+    "D:\\ApisRene\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj": {}
   },
   "projects": {
-    "C:\\Users\\robotltd\\source\\repos\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj": {
+    "D:\\ApisRene\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\robotltd\\source\\repos\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj",
+        "projectUniqueName": "D:\\ApisRene\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj",
         "projectName": "ApisDesembolsos",
-        "projectPath": "C:\\Users\\robotltd\\source\\repos\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj",
+        "projectPath": "D:\\ApisRene\\ApisDesembolsos\\ApisDesembolsos\\ApisDesembolsos.csproj",
         "packagesPath": "C:\\Users\\robotltd\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\robotltd\\source\\repos\\ApisDesembolsos\\ApisDesembolsos\\obj\\",
+        "outputPath": "D:\\ApisRene\\ApisDesembolsos\\ApisDesembolsos\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\robotltd\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,6 +40,16 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"

@@ -2,7 +2,9 @@
 using ApisDesembolsos.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace ApisDesembolsos.Controllers
@@ -11,27 +13,31 @@ namespace ApisDesembolsos.Controllers
     [ApiController]
     public class RobotController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
 
-        public RobotController(IConfiguration configuration)
+    
+
+        [HttpGet("{CAGE}/{IDapp}")]
+        public IActionResult Roles(Int64 CAGE, int IDapp)
         {
-            _configuration = configuration;
+            Procedures pro = new Procedures();
+            ModelState.Clear();
+            try
+            {
+                return Ok(pro.roles(CAGE, IDapp));
+            }catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = ex.Message, response = pro.roles(CAGE,IDapp)});
+            }
+           
         }
 
-        /*[HttpPost] // Sin probar
-        [Route("cargarRb")]
-        public IActionResult GetPccuPendiente(ModeloDesembolso desem, string correp, string nombre)
-        {
-            ProceduresBuros pro = new ProceduresBuros();
-            ModelState.Clear();
-            return Ok(pro.CargaDatos(desem, correp, nombre));
-        }*/
+
 
         [HttpPost] // Probada y funcionando
         [Route("solEnv")]
         public IActionResult solicitudEnvios([FromBody] REQUEST_ID data)
         {
-            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("ConexionBDD").ToString());
+            
 
             Procedures pro = new Procedures();
             ModelState.Clear();
@@ -123,7 +129,7 @@ namespace ApisDesembolsos.Controllers
         //NewControllers
 
         [HttpPost]
-        [Route("SPinserSolPccu")] //Probada y funcionando
+        [Route("SPinserSolPccu")] //Funcionando pero no probada
         public IActionResult SpInserSolPccu([FromBody] REQUEST_TICKET_AND_IDPERSONA data)
         {
             Procedures pro = new Procedures();
@@ -201,7 +207,7 @@ namespace ApisDesembolsos.Controllers
 
 
         [HttpPost]
-        [Route("getCiPersona")]
+        [Route("getCiPersona")] //Probada y funcionando
         public IActionResult getCiPersona([FromBody] REQUEST_TICKET_AS_INT data)
         {
             Procedures pro = new Procedures();
@@ -211,7 +217,7 @@ namespace ApisDesembolsos.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost] //Probada y funcionando
         [Route("getCiPersona2")]
         public IActionResult getCiPersona2([FromBody] REQUEST_TICKET_AS_INT data)
         {

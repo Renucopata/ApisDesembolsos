@@ -96,4 +96,16 @@ namespace ApisDesembolsos.Models
     {
         public Int64 TICKET { get; set; }
     }
+
+    public partial class CARGO_RESPONSE
+    {
+        public Int64 IdTabla { get; set; }
+
+        public Int64? IdApp { get; set; }
+
+        public string? Rol { get; set; }
+
+        public string? Descripcion { get; set; }
+    }
+
 }

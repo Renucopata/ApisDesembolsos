@@ -1,4 +1,6 @@
 ﻿using ApisDesembolsos.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -7,37 +9,76 @@ namespace ApisDesembolsos.Handlers
     public class Procedures
     {
 
-        /*public bool CargaDatos(ModeloDesembolso desembolso, string correoP, string nombre)
+        public List<CARGO_RESPONSE> roles(Int64 cage, int IDapp)
         {
-            bool resp = false;
-            try
+            List<CARGO_RESPONSE> responseList = new List<CARGO_RESPONSE>();
+            var cn = new ConnectionCargos();
+
+
+
+            using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
-                var cn = new ConnectionBuros();
-                using (var conexion = new SqlConnection(cn.get_cadConexionBuros()))
+                conexion.Open();
+                string sql = "SELECT * from CARGOS where idAPP='"+IDapp+"'";
+                using (SqlCommand command = new SqlCommand(sql, conexion))
                 {
-                    conexion.Open();
-                    SqlCommand cmd = new SqlCommand("SP_INSERT_SOLICITUD", conexion);
-                    cmd.Parameters.AddWithValue("NOMBRE_OFICIAL", nombre);
-                    cmd.Parameters.AddWithValue("AGENCIA", desembolso.AGENCIA);
-                    cmd.Parameters.AddWithValue("SUCURSAL", desembolso.SUCURSAL);
-                    cmd.Parameters.AddWithValue("NPRESTAMO", desembolso.NPRESTAMO);
-                    cmd.Parameters.AddWithValue("PRIMERA_FECHA", desembolso.PRIMERA_FECHA);
-                    cmd.Parameters.AddWithValue("CORREO_PLATAFORMA", correoP);
-                    cmd.Parameters.AddWithValue("CORREO_OFICIAL", "DCORONEL@BANCOECOFUTURO.COM.BO");
-                    cmd.Parameters.AddWithValue("TICKET", desembolso.TICKET);
-                    cmd.Parameters.AddWithValue("MONTO", 0.0);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.ExecuteNonQuery();
+
+                        if (IDapp == 3)
+                        {
+                            if (cage == 741808 || cage == 845209)
+                            {
+
+                                using (var adapter = new SqlDataAdapter(command))
+                                {
+                                    var dt = new DataTable();
+                                    adapter.Fill(dt);
+
+                                    if (dt.Rows.Count > 0)
+                                    {
+                                        for (int i = 0; i < dt.Rows.Count; i++)
+                                        {
+                                            var response = new CARGO_RESPONSE();
+                                            response.IdTabla = Convert.ToInt64(dt.Rows[i]["idTabla"]);
+                                            response.IdApp = Convert.ToInt64(dt.Rows[i]["idAPP"]);
+                                            response.Rol = Convert.ToString(dt.Rows[i]["rol"]);
+                                            response.Descripcion = Convert.ToString(dt.Rows[i]["descripcion"]);
+
+                                            responseList.Add(response);
+                                        }
+
+                                    }
+                                }
+                            }
+                        } 
+                        else
+                        {
+                            using (var adapter = new SqlDataAdapter(command))
+                            {
+                                var dt = new DataTable();
+                                adapter.Fill(dt);
+
+                                if (dt.Rows.Count > 0)
+                                {
+                                    for (int i = 0; i < dt.Rows.Count; i++)
+                                    {
+                                        var response = new CARGO_RESPONSE();
+                                        response.IdTabla = Convert.ToInt64(dt.Rows[i]["idTabla"]);
+                                        response.IdApp = Convert.ToInt64(dt.Rows[i]["idAPP"]);
+                                        response.Rol = Convert.ToString(dt.Rows[i]["rol"]);
+                                        response.Descripcion = Convert.ToString(dt.Rows[i]["descripcion"]);
+
+                                        responseList.Add(response);
+                                    }
+
+                                }
+                            }
+                        }        
                 }
-                resp = true;
+                return responseList;
             }
-            catch (Exception ex)
-            {
-                resp = false;
-                string mensaje = ex.Message.ToString();
-            }
-            return resp;
-        }*/
+            
+        }
+
 
         public SpResponse SpTraerSoliEnvios(REQUEST_ID data)
         {
@@ -127,32 +168,32 @@ namespace ApisDesembolsos.Handlers
             var cn = new ConnectionDesembolsos();
             using (var conexion = new SqlConnection(cn.get_cadConexion()))
             {
-                using (var cmd = new SqlCommand("SP_INSERT_SOLICITUD", conexion))
+                conexion.Open();
+                SqlCommand cmd = new SqlCommand("SP_INSERT_SOLICITUD", conexion);
+               
+                cmd.Parameters.AddWithValue("@NOMBRE_OFICIAL", data.NOMB_OFICIAL);
+                cmd.Parameters.AddWithValue("@AGENCIA", data.AGENCIA);
+                cmd.Parameters.AddWithValue("@SUCURSAL", data.SUCURSAL);
+                cmd.Parameters.AddWithValue("@NPRESTAMO", data.NPRESTAMO);
+                cmd.Parameters.AddWithValue("@PRIMERA_FECHA", data.PRIMERA_FECHA);
+                cmd.Parameters.AddWithValue("@CORREO_PLATAFORMA", data.CORREO_PLATAFORMA);
+                cmd.Parameters.AddWithValue("@CORREO_OFICIAL", data.CORREO_OFICIAL);
+                cmd.Parameters.AddWithValue("@TICKET", data.TICKET);
+                cmd.Parameters.AddWithValue("@MONTO", data.MONTO);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+                using (var adapter = new SqlDataAdapter(cmd))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@NOMBRE_OFICIAL", data.NOMB_OFICIAL);
-                    cmd.Parameters.AddWithValue("@AGENCIA", data.AGENCIA);
-                    cmd.Parameters.AddWithValue("@SUCURSAL", data.SUCURSAL);
-                    cmd.Parameters.AddWithValue("@NPRESTAMO", data.NPRESTAMO);
-                    cmd.Parameters.AddWithValue("@PRIMERA_FECHA", data.PRIMERA_FECHA);
-                    cmd.Parameters.AddWithValue("@CORREO_PLATAFORMA", data.CORREO_PLATAFORMA);
-                    cmd.Parameters.AddWithValue("@CORREO_OFICIAL", data.CORREO_OFICIAL);
-                    cmd.Parameters.AddWithValue("@TICKET", data.TICKET);
-                    cmd.Parameters.AddWithValue("@MONTO", data.MONTO);
-
-                    using (var adapter = new SqlDataAdapter(cmd))
+                    try
                     {
-                        try
-                        {
 
-                            return true;
+                        return true;
 
-                            //Siempre devuelve true, comfirmar que es necesario llenar los parametros
-                        }
-                        catch (Exception ex)
-                        {
-                            return false;
-                        }
+                        //Siempre devuelve true, comfirmar que es necesario llenar los parametros
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
                     }
                 }
             }
